@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daberechi Ezeadu - Unum Sint</title>
+    <style>
+        :root {
+            --ink: rgb(11, 11, 36);
+            --muted: rgb(70, 78, 105);
+            --paper: #ffffff;
+            --surface: #f7faff;
+            --line: rgb(197, 211, 234);
+            --accent: rgb(17, 17, 59);
+            --accent-dark: rgb(23, 23, 114);
+            --sage: #e6eefb;
+            --night:  rgb(15, 15, 56);
+            --max-width: 1160px;
+            --serif: Georgia, 'Times New Roman', serif;
+            --sans: 'Trebuchet MS', 'Lucida Sans Unicode', sans-serif;
+            --warm: rgb(248, 248, 250);
+            --blue: #e7eef9;
+            --orange: #2f0a47;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 78px; }
+        body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+        a { color: inherit; }
+        .case-nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 1px solid rgb(204, 218, 246);
+            background: rgba(255, 255, 255, .94);
+            backdrop-filter: blur(14px);
+        }
+        .case-nav-inner, .case-footer-inner {
+            width: min(var(--max-width), calc(100% - 48px));
+            margin: auto;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+        .case-logo {
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: -.03em;
+        }
+        .case-logo span {
+            color: var(--accent);
+            font-style: italic;
+        }
+        .case-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: .82rem;
+        }
+        .case-nav-links a { text-decoration: none; }
+        .case-nav-links .back-link, .case-nav-links .contact-link {
+            padding: 3px 12px;
+            border: 1px solid var(--accent);
+            border-radius: 6px;
+            color: var(--accent-dark);
+            font-size: .92rem;
+            font-weight: 700;
+        }
+        .case-nav-links .back-link:hover, .case-nav-links .contact-link:hover {
+            background: var(--accent);
+            color: var(--surface);
+        }
+        .case-nav-links a:hover {
+            color: var(--accent);
+        }
+        .case-study { overflow: hidden; }
+        .eyebrow, .section-kicker { margin: 0 0 18px; color: var(--accent); font-size: .7rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+        @media (max-width: 800px) {
+            .hero-items { flex-direction: column; }
+            .hero-right { margin-top: 2rem; }
+        }
+        @media (max-width: 560px) {
+            .case-nav-inner, .case-footer-inner { width: min(100% - 32px, var(--max-width)); }
+            .case-nav-inner { min-height: 48px; }
+            .case-nav-links { gap: 10px; font-size: .72rem; }
+            .case-nav-links .back-link, .case-nav-links .contact-link { padding: 3px 8px; font-size: .82rem; }
+        }
+        .case-footer {
+            padding: 8px 0;
+            border-top: 1px solid rgb(204, 218, 246);
+            background: rgba(255, 255, 255, .94);
+            color: var(--ink);
+        }
+        .case-footer-inner {
+            min-height: 0;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        .case-footer a {
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+        .case-footer a:hover { color: var(--accent); }
+
+        /* Page-specific styles */
+        body { background: var(--warm); }
+        .hero-section {
+            min-height: auto;
+            width: 100%;
+            padding: 1.5rem max(1.5rem, 5vw) 2.75rem;
+            border-top: 1px solid rgb(197, 211, 234);
+            background: rgb(254, 254, 255);
+        }
+        .hero-section > * {
+            width: min(100%, 1200px);
+            margin-right: auto;
+            margin-left: auto;
+        }
+        .hero-items {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        .hero-image {
+            height: min(480px, calc(100vh - 120px));
+            max-height: calc(100vh - 120px);
+            width: auto;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto;
+        }
+        .hero-section h1 {
+            margin-top: 100px;
+            margin-bottom: 20px;
+            color: rgb(15, 15, 56);
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-size: clamp(4.5rem, 9vw, 7rem);
+            font-weight: 600;
+            line-height: .9;
+            letter-spacing: 0;
+        }
+        .hero-section .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: .65rem;
+            margin: 0 0 1.25rem;
+            color: rgb(17, 17, 59);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: .75rem;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+        }
+        .hero-section .eyebrow::before {
+            content: "";
+            display: inline-block;
+            width: 32px;
+            height: 3px;
+            flex: 0 0 32px;
+            background: rgb(17, 17, 59);
+        }
+        .hero-intro {
+            max-width: 520px;
+            margin-top: 100px;
+            margin-bottom: 70px;
+            color: rgb(70, 78, 105);
+            font: normal clamp(1rem, 1.5vw, 1.2rem)/1.35 Georgia, 'Times New Roman', serif;
+            letter-spacing: 0;
+        }
+        .hero-role {
+            max-width: 430px;
+            margin: 22px 0 0;
+            
+            border: 0;
+            padding: 0;
+            background: transparent;
+        }
+        .hero-role strong {
+            display: block;
+            color: rgb(15, 15, 56);
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            line-height: 1.4;
+            letter-spacing: 0;
+        }
+        .hero-role span {
+            display: block;
+            margin-top: .3rem;
+            color: rgb(107, 116, 141);
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', sans-serif;
+            font-size: .82rem;
+            font-weight: 400;
+            line-height: 1.4;
+            letter-spacing: 1.5px;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+        .stat-item-1, .stat-item-2, .stat-item-3, .stat-item-4 {
+           
+            text-align: center;
+            font-weight: bold;
+            border-top: 1px solid rgb(15, 15, 56);
+            border-bottom: 1px solid rgb(15, 15, 56);
+            margin-top: 1.5rem;
+        }
+        .stat-item-1, .stat-item-2, .stat-item-3 {
+            border-right: 1px solid rgb(15, 15, 56);
+        }
+        .stat-item span {
+            display: block;
+            font-size: 1.5rem;
+            color: rgb(15, 15, 56);
+        }
+        .placeholder {
+            position: relative;
+            overflow: hidden;
+            min-height: 210px;
+            border-radius: 8px;
+            background: #18264b;
+        }
+        .placeholder img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: inherit;
+            object-fit: cover;
+            opacity: .68;
+        }
+        .experience-visual {
+            min-height: 140px;
+            height: 220px;
+        }
+        .experience-visual img {
+            min-height: 0;
+        }
+        .chapter {
+            padding: 100px 24px;
+            border-top: 1px solid var(--line);
+        }
+        .chapter:nth-child(even) {
+            background: var(--blue);
+        }
+        .chapter-inner {
+            width: min(var(--max-width), 100%);
+            margin: auto;
+        }
+        .chapter-head {
+            display: grid;
+            grid-template-columns: .65fr 1.35fr;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+        .chapter h2 {
+            margin: 0;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+            max-width: 760px;
+            font: normal clamp(2.5rem, 5vw, 5rem)/.95 var(--serif);
+            letter-spacing: -.06em;
+        }
+        .chapter-kicker {
+            margin: 5px 0 0;
+            color: var(--accent);
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+        }
+        .lede {
+            max-width: 680px;
+            margin: 0 0 30px;
+            font: normal clamp(1.25rem, 2vw, 1.65rem)/1.35 var(--serif);
+        }
+        .copy {
+            max-width: 760px;
+            color: var(--muted);
+            font-size: 1.05rem;
+        }
+        .copy p {
+            margin: 0 0 18px;
+        }
+        .copy strong {
+            color: var(--ink);
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+        .cards.four {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        .card {
+            padding: 26px;
+            border: 1px solid var(--line);
+            background: rgba(255,255,255,.7);
+        }
+        .card.dark {
+            background: var(--night);
+            color: #fff;
+            border-color: var(--night);
+        }
+        .card.accent {
+            background: var(--orange);
+            color: #fff;
+            border-color: var(--orange);
+        }
+        .card-number {
+            display: block;
+            margin-bottom: 36px;
+            color: var(--accent);
+            font: 1.7rem var(--serif);
+        }
+        .dark .card-number, .accent .card-number {
+            color: #f7d7c9;
+        }
+        .card h3 {
+            margin: 0 0 10px;
+            font: normal 1.55rem/1 var(--serif);
+        }
+        .card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: .9rem;
+        }
+        .dark p, .accent p {
+            color: rgba(255,255,255,.8);
+        }
+        .pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 26px 0;
+        }
+        .pill {
+            padding: 9px 13px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: #fff;
+            color: var(--accent);
+            font-size: .78rem;
+        }
+        .statement {
+            max-width: 860px;
+            margin: 46px 0 0;
+            padding: 30px;
+            background: var(--night);
+            color: #fff;
+            font: normal clamp(1.7rem, 3vw, 2.8rem)/1.05 var(--serif);
+        }
+        .decision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+        .decision {
+            padding: 28px;
+            border-left: 4px solid var(--orange);
+            background: #fff;
+        }
+        .decision span {
+            color: var(--muted);
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+        .decision h3 {
+            margin: 12px 0 20px;
+            font: normal 1.75rem/1 var(--serif);
+        }
+        .decision p {
+            margin: 8px 0 0;
+            color: var(--muted);
+            font-size: .92rem;
+        }
+        .decision b {
+            color: var(--ink);
+        }
+        .flow {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0;
+            margin: 30px 0 42px;
+        }
+        .flow-item {
+            position: relative;
+            padding: 24px 18px;
+            background: var(--night);
+            color: #fff;
+            border-right: 1px solid rgba(255,255,255,.25);
+        }
+        .flow-item:not(:last-child)::after {
+            content: "→";
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            right: -13px;
+            color: var(--orange);
+            font-size: 1.3rem;
+        }
+        .flow-item span {
+            display: block;
+            margin-bottom: 28px;
+            color: #aebfe0;
+            font-size: .7rem;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+        }
+        .flow-item strong {
+            font: normal 1.35rem/1 var(--serif);
+        }
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+        .timeline .card {
+            border-top: 4px solid var(--orange);
+        }
+        .feature {
+            display: grid;
+            grid-template-columns: .8fr 1.2fr;
+            gap: 42px;
+            align-items: center;
+            padding: 34px 0;
+            border-top: 1px solid var(--line);
+        }
+        .feature:nth-child(even) {
+            grid-template-columns: 1.2fr .8fr;
+        }
+        .feature:nth-child(even) .feature-image {
+            order: -1;
+        }
+        .feature h3 {
+            margin: 0 0 14px;
+            font: normal 2.5rem/1 var(--serif);
+        }
+        .feature-image {
+            min-height: 260px;
+        }
+        .feature-image img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .metric-band {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--line);
+        }
+        .metric-band div {
+            padding: 26px;
+            background: var(--night);
+            color: #fff;
+        }
+        .metric-band strong {
+            display: block;
+            font: normal 3rem/1 var(--serif);
+            color: #fff;
+        }
+        .metric-band span {
+            display: block;
+            margin-top: 8px;
+            color: #b8c5dd;
+            font-size: .7rem;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+        }
+        .closing {
+            padding: 130px 24px;
+            background: var(--night);
+            color: #fff;
+        }
+        .closing .chapter-inner {
+            max-width: 900px;
+        }
+        .closing h2 {
+            margin: 0 0 28px;
+            font: normal clamp(3rem, 7vw, 7rem)/.9 var(--serif);
+            letter-spacing: -.07em;
+        }
+        .closing p {
+            max-width: 700px;
+            color: #cbd4e5;
+            font-size: 1.15rem;
+        }
+        .closing strong {
+            color: #fff;
+        }
+        @media (max-width: 800px) {
+            .cards.four, .metric-band {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hero-items {
+                flex-direction: column;
+            }
+            .hero-right {
+                margin-top: 2rem;
+            }
+            .hero-section h1 {
+                margin-top: 48px;
+            }
+            .hero-intro {
+                margin-top: 32px;
+            }
+            .chapter-head, .feature, .feature:nth-child(even) {
+                grid-template-columns: 1fr;
+            }
+            .feature:nth-child(even) .feature-image {
+                order: 0;
+            }
+            .cards, .decision-grid, .timeline {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .flow {
+                grid-template-columns: 1fr;
+            }
+            .flow-item {
+                border-right: 0;
+                border-bottom: 1px solid rgba(255,255,255,.25);
+            }
+            .flow-item:not(:last-child)::after {
+                content: "↓";
+                top: auto;
+                right: 50%;
+                bottom: -16px;
+            }
+        }
+        @media (max-width: 560px) {
+            .chapter {
+                padding-inline: 16px;
+            }
+            .hero-section {
+                padding-top: 1.5rem;
+                padding-bottom: 2rem;
+            }
+            .hero-section h1 {
+                margin-top: 40px;
+                font-size: clamp(4rem, 18vw, 7rem);
+            }
+            .hero-intro {
+                margin-top: 24px;
+            }
+            .hero-image {
+                width: 100%;
+                height: auto;
+                max-height: none;
+                object-fit: cover;
+            }
+            .cards, .cards.four, .decision-grid, .timeline, .metric-band {
+                grid-template-columns: 1fr;
+            }
+            .chapter {
+                padding-block: 72px;
+            }
+        }
+    </style>
+</head>
+<body>
+<header class="case-nav"><div class="case-nav-inner"><a class="case-logo" href="../../../index.html">Daberechi <span>Ezeadu</span></a><nav class="case-nav-links"><a class="back-link" href="../../../index.html#products">Go back to products</a><a class="contact-link" href="../../../index.html#contact">Contact</a></nav></div></header>
+<main class="case-study">
+<section class="hero-section">
+    <div class="hero-items">
+        <div class="heroleft">
+            <div class="eyebrow">Case Study / Product / 2026</div>
+            <h1>UNUM SINT</h1>
+            <p class="hero-intro">From a broad digital vision to a focused, research led product</p>
+            <p class="hero-role hero-left-note"><strong>Product Manager &amp; Internal Ops</strong><span>Faith Technology · AI · Administration</span></p>
+        </div>
+        <div class="hero-right">
+            <img src= "../../images/products/unumsint-case.png" alt="UNUM SINT product hero image" class="hero-image">
+        </div>
+    </div>
+    <div class="stats">
+        <div class="stat-item stat-item-1"><span>70+</span> User conversations</div>
+        <div class="stat-item stat-item-2"><span>20+</span> Team members</div>
+        <div class="stat-item stat-item-3"><span>1,000+</span> Waitlist sign ups</div>
+        <div class="stat-item stat-item-4"><span>2</span> Major launches</div>
+    </div>
+</section>
+<section class="chapter"><div class="chapter-inner"><div class="chapter-head"><p class="chapter-kicker">01 — The problem</p><h2>A strong vision needed a clear product direction.</h2></div><div class="copy"><p>UNUM SINT is a digital platform being developed for the Catholic Diocese of Port Harcourt to create a more connected experience for faith, communication, administration, and community engagement.</p><p>When I joined the team, the vision was already ambitious. There were ideas around digitising Church records, improving communication, making Catholic resources more accessible, introducing AI-powered faith assistance, supporting catechesis and youth engagement, and creating a platform that could scale beyond a single diocese.</p><p>The opportunity was clear. The challenge was deciding <strong>what to build first</strong>.</p></div><div class="pills"><span class="pill">Archive</span><span class="pill">Communication</span><span class="pill">AI</span><span class="pill">Catechesis</span><span class="pill">Community</span><span class="pill">Youth</span><span class="pill">Diaspora</span><span class="pill">Donations</span><span class="pill">Gamification</span></div><div class="statement">How do we turn a broad digital vision into a product experience useful enough to launch, focused enough to execute, and flexible enough to grow?</div></div></section>
+<section class="chapter"><div class="chapter-inner"><div class="chapter-head"><p class="chapter-kicker">02 — The users</p><h2>The product served an ecosystem, not a single user.</h2></div><div class="cards four"><article class="card"><span class="card-number">01</span><h3>Parishioners</h3><p>Faith resources, Church information, spiritual support, and community connection.</p></article><article class="card"><span class="card-number">02</span><h3>Priests</h3><p>Pastoral and administrative needs across parish life.</p></article><article class="card"><span class="card-number">03</span><h3>Parish teams</h3><p>Managing information and communicating with members.</p></article><article class="card"><span class="card-number">04</span><h3>Diocesan teams</h3><p>Records, visibility, coordination, and communication across the Diocese.</p></article><article class="card"><span class="card-number">05</span><h3>Catechists &amp; youth</h3><p>Learning, engagement, and community participation.</p></article><article class="card"><span class="card-number">06</span><h3>Diaspora</h3><p>Staying connected regardless of where they live.</p></article></div><div class="copy" style="margin-top:30px"><p>This diversity made product prioritisation more complex. A feature valuable to a diocesan administrator was not necessarily the feature that would bring a parishioner back.</p></div></div></section>
+<section class="chapter"><div class="chapter-inner"><div class="chapter-head"><p class="chapter-kicker">03 — What we learned</p><h2>Research changed the product question.</h2></div><p class="lede"><strong>40+ direct conversations</strong> across different parts of the Catholic community.</p><div class="cards four"><article class="card accent"><span class="card-number">01</span><h3>Different needs</h3><p>The ecosystem had users with different responsibilities and expectations.</p></article><article class="card"><span class="card-number">02</span><h3>More opportunities than capacity</h3><p>The vision contained more valid directions than the team could pursue at once.</p></article><article class="card"><span class="card-number">03</span><h3>Recurring value mattered</h3><p>The first experience needed a clear reason for users to return.</p></article><article class="card dark"><span class="card-number">04</span><h3>Trust was part of usability</h3><p>Faith, institutional information, and AI required care beyond interface design.</p></article></div><div class="statement">WHAT CAN WE BUILD? <span style="color:#c28be7">→ WHAT SHOULD WE BUILD FIRST?</span></div></div></section>
+<section class="chapter"><div class="chapter-inner"><div class="chapter-head"><p class="chapter-kicker">04 — The product</p><h2>From a broad ecosystem to a focused first experience.</h2></div><div class="cards"><article class="card"><h3>Archive &amp; Database</h3><p>Digitising and organising sacramental and parish records.</p></article><article class="card"><h3>Faith Companion</h3><p>Making Catholic faith guidance more accessible through AI.</p></article><article class="card"><h3>Community &amp; Communication</h3><p>A direct channel between the Diocese, parishes, and parishioners.</p></article><article class="card"><h3>Catechesis</h3><p>Making Catholic teaching and learning resources easier to access.</p></article><article class="card"><h3>Faith Quest</h3><p>More interactive faith experiences for younger users.</p></article><article class="card"><h3>Youth &amp; Diaspora</h3><p>Stronger ways for wider communities to remain connected.</p></article></div><p class="lede" style="margin-top:60px">The product strategy was not to abandon these ideas. It was to <strong>sequence them</strong>.</p><div class="cards four"><article class="card dark"><span class="card-number">READ</span><h3>Daily Readings</h3><p>Core Catholic readings directly within the platform.</p></article><article class="card accent"><span class="card-number">REFLECT</span><h3>Faith reflections</h3><p>A simple way to engage with the day's readings.</p></article><article class="card dark"><span class="card-number">STAY INFORMED</span><h3>Announcements</h3><p>A direct channel for important diocesan information.</p></article><article class="card accent"><span class="card-number">ASK</span><h3>Faith Companion</h3><p>An AI-powered Catholic faith assistant.</p></article></div><div class="statement">Read. Reflect. Stay informed. Ask.</div></div></section>
+<section class="chapter"><div class="chapter-inner"><div class="chapter-head"><p class="chapter-kicker">05 — My role</p><h2>Product direction and execution infrastructure.</h2></div><div class="cards"><article class="card"><h3>Product management</h3><p>Discovery, research, strategy, roadmaps, prioritisation, mapping, requirements, PRDs, testing, iteration, launches, and documentation.</p></article><article class="card dark"><h3>Internal operations</h3><p>Team coordination, meetings, task assignment, follow-ups, deadlines, processes, stakeholder coordination, structure, and execution.</p></article></div><div class="statement">My responsibility was not simply to decide what we should build, but to create enough clarity, structure, and alignment for a distributed team to move in the same direction.</div></div></section>
+<section class="chapter"><div class="chapter-inner"><div class="chapter-head"><p class="chapter-kicker">06 — Product strategy</p><h2>We did not need to build everything at once.</h2></div><div class="timeline"><article class="card"><span class="card-number">NOW</span><h3>Archive</h3><p>March 2026 · Foundation for digitisation.</p></article><article class="card accent"><span class="card-number">NEXT</span><h3>Communications MVP</h3><p>August 2026 · A focused daily experience.</p></article><article class="card"><span class="card-number">LATER</span><h3>Future ecosystem</h3><p>Catechesis, youth, diaspora, Faith Quest, donations, and community.</p></article></div></div></section>
+<section class="chapter"><div class="chapter-inner"><div class="chapter-head"><p class="chapter-kicker">07 — The experience</p><h2>Creating a reason to return.</h2></div><div class="flow"><div class="flow-item"><span>01</span><strong>Open UNUM SINT</strong></div><div class="flow-item"><span>02</span><strong>Read</strong></div><div class="flow-item"><span>03</span><strong>Reflect</strong></div><div class="flow-item"><span>04</span><strong>Stay informed</strong></div><div class="flow-item"><span>05</span><strong>Ask</strong></div></div><div class="copy"><p>The experience was designed around everyday engagement rather than requiring users to understand the entire ecosystem before they could benefit from it.</p></div><div class="placeholder experience-visual" style="margin-top:30px"><img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="Temporary product flow visual placeholder"></div></div></section>
+<section class="chapter"><div class="chapter-inner"><div class="chapter-head"><p class="chapter-kicker">08 — Key product decisions</p><h2>Turning research into product decisions.</h2></div><div class="decision-grid"><article class="decision"><span>Decision 01</span><h3>Focus before scale</h3><p><b>Insight:</b> The vision contained multiple valuable opportunities.</p><p><b>Why:</b> A focused MVP gave the team a clearer product to build, test, and learn from.</p></article><article class="decision"><span>Decision 02</span><h3>Build around recurring value</h3><p><b>Insight:</b> A platform needs a reason for users to return.</p><p><b>Why:</b> Readings, reflections, announcements, and Faith Companion created natural entry points.</p></article><article class="decision"><span>Decision 03</span><h3>AI as a capability</h3><p><b>Insight:</b> AI introduced questions around trust and appropriate use.</p><p><b>Why:</b> The product should remain useful even without AI.</p></article><article class="decision"><span>Decision 04</span><h3>Design trust into the product</h3><p><b>Insight:</b> The product touched faith, records, personal information, and AI responses.</p><p><b>Why:</b> Privacy, access, security, and auditability are part of the product.</p></article></div></div></section>
+<section class="chapter"><div class="chapter-inner"><div class="chapter-head"><p class="chapter-kicker">09 — Feature deep dive</p><h2>Four capabilities, one focused experience.</h2></div><div class="feature"><div><h3>01 — Daily Readings</h3><p class="copy">A direct way to access the day's Catholic readings within UNUM SINT, reducing the distance between users and a core daily faith experience.</p></div><div class="feature-image placeholder"><img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Temporary Daily Readings screenshot placeholder"></div></div><div class="feature"><div><h3>02 — Reflections</h3><p class="copy">Reflections extend the reading experience beyond consumption and create space to engage with what users have read.</p></div><div class="feature-image placeholder"><img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Temporary Reflections screenshot placeholder"></div></div><div class="feature"><div><h3>03 — Announcements</h3><p class="copy">A more direct communication channel between the Diocese and its community.</p></div><div class="feature-image placeholder"><img src="https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Temporary Announcements screenshot placeholder"></div></div><div class="feature"><div><h3>04 — Faith Companion</h3><p class="copy">Integrated through Magisterium AI, the Faith Companion is a support tool, not a replacement for pastoral care, confession, or personal spiritual direction.</p></div><div class="feature-image placeholder"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Temporary Faith Companion screenshot placeholder"></div></div></div></section>
+<section class="chapter"><div class="chapter-inner"><div class="chapter-head"><p class="chapter-kicker">10 — From idea to launch</p><h2>Product decisions had to become executable.</h2></div><div class="flow"><div class="flow-item"><span>01</span><strong>Research</strong></div><div class="flow-item"><span>02</span><strong>Direction</strong></div><div class="flow-item"><span>03</span><strong>PRD</strong></div><div class="flow-item"><span>04</span><strong>Design</strong></div><div class="flow-item"><span>05</span><strong>Development</strong></div></div><div class="flow"><div class="flow-item"><span>06</span><strong>Testing</strong></div><div class="flow-item"><span>07</span><strong>Iteration</strong></div><div class="flow-item"><span>08</span><strong>Launch</strong></div></div><div class="pills"><span class="pill">Product</span><span class="pill">Design</span><span class="pill">Development</span><span class="pill">Content</span><span class="pill">Marketing</span><span class="pill">Communications</span><span class="pill">Founders</span><span class="pill">External partners</span></div></div></section>
+<section class="chapter"><div class="chapter-inner"><div class="chapter-head"><p class="chapter-kicker">11 — Challenges &amp; trade-offs</p><h2>The biggest challenge was breadth.</h2></div><div class="cards"><article class="card"><span class="card-number">CHALLENGE</span><h3>Too many directions</h3><p><strong>Response:</strong> Prioritised a focused MVP and sequenced the wider vision.</p></article><article class="card"><span class="card-number">CHALLENGE</span><h3>20+ person team</h3><p><strong>Response:</strong> Created clearer requirements, coordination, and follow-up structures.</p></article><article class="card"><span class="card-number">CHALLENGE</span><h3>AI and faith require trust</h3><p><strong>Response:</strong> Defined boundaries and treated trust mechanisms as part of the product.</p></article></div></div></section>
+<section class="chapter"><div class="chapter-inner"><div class="chapter-head"><p class="chapter-kicker">12 — Outcome</p><h2>From broad vision to launched product experiences.</h2></div><div class="metric-band"><div><strong>1,000+</strong><span>Waitlist sign-ups</span></div><div><strong>40+</strong><span>User conversations</span></div><div><strong>20+</strong><span>Team members</span></div><div><strong>2</strong><span>Major launches</span></div></div><div class="timeline" style="margin-top:30px"><article class="card"><span class="card-number">MARCH 2026</span><h3>Archive launch</h3></article><article class="card accent"><span class="card-number">AUGUST 2026</span><h3>Communications MVP launch</h3></article></div><div class="copy" style="margin-top:30px"><p>The most important outcome was creating a clearer path from the wider UNUM SINT vision to something the team could prioritise, build, test, and put in users' hands.</p></div></div></section>
+<section class="chapter"><div class="chapter-inner"><div class="chapter-head"><p class="chapter-kicker">13 — What I learned</p><h2>Product management is creating clarity in ambiguity.</h2></div><div class="cards four"><article class="card"><span class="card-number">01</span><h3>Strategy is sequencing.</h3><p>Sometimes the PM decides which good idea comes first.</p></article><article class="card"><span class="card-number">02</span><h3>Research changes questions.</h3><p>Conversations moved the team from possibility to focus.</p></article><article class="card"><span class="card-number">03</span><h3>Trust is part of product.</h3><p>Trust must influence decisions from the beginning.</p></article><article class="card"><span class="card-number">04</span><h3>Product and operations connect.</h3><p>Direction needs alignment, communication, and accountability.</p></article></div></div></section>
+<section class="chapter"><div class="chapter-inner"><div class="chapter-head"><p class="chapter-kicker">14 — What's next</p><h2>The MVP is a starting point, not the destination.</h2></div><div class="cards four"><article class="card"><h3>Archive &amp; Database</h3></article><article class="card"><h3>Catechesis</h3></article><article class="card"><h3>Youth &amp; Faith Quest</h3></article><article class="card"><h3>Community &amp; Diaspora</h3></article><article class="card"><h3>Donations</h3></article><article class="card"><h3>Additional engagement</h3></article></div><div class="copy" style="margin-top:30px"><p>The next phase should continue to be guided by user behaviour, feedback, adoption, and the needs of the Diocese, rather than simply expanding the feature list.</p></div></div></section>
+<section class="closing"><div class="chapter-inner"><p class="eyebrow" style="color:#aebfe0">Reflection</p><h2>Direction before delivery.</h2><p>Start with <strong>Direction</strong>. Create <strong>Distinction</strong> around the actual problem. Make <strong>Deliberate</strong> product decisions. Drive <strong>Delivery</strong>. Keep the <strong>Drive</strong> to improve.</p><p>For me, product management is not just deciding what to build. It is <strong>creating enough clarity for people to build the right thing together.</strong></p></div></section>
+</main>
+<footer class="case-footer"><div class="case-footer-inner"><a href="../../../index.html#products">Back to products</a></div></footer>
+</body>
+</html>

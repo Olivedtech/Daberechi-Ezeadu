@@ -499,7 +499,6 @@ header nav a:hover {
     font-style: italic;
 }
 
-.about-content h2,
 .about-content p,
 .about-content blockquote,
 .about-content cite,
@@ -663,7 +662,7 @@ header nav a:hover {
     max-width: 720px;
     margin: 0 auto 24px;
     color: rgb(17, 17, 59);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font: sans-serif;
     font-size: clamp(1.05rem, 1.7vw, 1.3rem);
     font-weight: 600;
     line-height: 1.35;
